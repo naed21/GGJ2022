@@ -64,6 +64,11 @@ public class PlayerController : MonoBehaviour
 
         _velocity.y = _velocityY;
         _wasGrounded = _controller.isGrounded;
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+	        EldritchVision.Toggle();
+        }
     }
 
 	private void FixedUpdate()
