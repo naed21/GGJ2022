@@ -12,8 +12,20 @@ public class MovingPlatform : MonoBehaviour
     private float _waitAtWaypoints;
     [SerializeField]
     private bool _loop;
-
+    [SerializeField]
     private bool _movementEnabled = true;
+    public bool MovementEnabled
+    {
+        get
+        {
+            return _movementEnabled;
+        }
+        set
+        {
+            _movementEnabled = value;
+        }
+    }
+
     private int _currentIndex = 1;
     private bool _reversing = false;
 
