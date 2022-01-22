@@ -29,11 +29,11 @@ public class MovingPlatform : MonoBehaviour
     private int _currentIndex = 1;
     private bool _reversing = false;
 
-    private Dictionary<Transform, Transform> _objectsOnPlatform =
-        new Dictionary<Transform, Transform>();
-    
-    // Start is called before the first frame update
-    void Start()
+	private Dictionary<Transform, Transform> _objectsOnPlatform =
+		new Dictionary<Transform, Transform>();
+
+	// Start is called before the first frame update
+	void Start()
     {
         if(_waypoints.Length < 2)
 		{
@@ -81,10 +81,13 @@ public class MovingPlatform : MonoBehaviour
                     _currentIndex += _currentIndex != _waypoints.Length - 1 ? 1 : -(_waypoints.Length - 1);
 			}
 		}
-
-        transform.position = Vector2.MoveTowards(transform.position,
-            _waypoints[_currentIndex],
-            Time.deltaTime * _slideSpeed);
+		//var ridgedBody = GetComponent<Rigidbody>();
+		//ridgedBody.MovePosition(Vector2.MoveTowards(transform.position,
+		//    _waypoints[_currentIndex],
+		//    Time.deltaTime * _slideSpeed));
+		transform.position = Vector2.MoveTowards(transform.position,
+			_waypoints[_currentIndex],
+			Time.deltaTime * _slideSpeed);
 	}
 
     private IEnumerator WaitAtWaypoint(int intToAdd)
@@ -100,14 +103,14 @@ public class MovingPlatform : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		//Player layer
-        if(other.gameObject.layer == 3)
+		if (other.gameObject.layer == 3)
 		{
-            if(!_objectsOnPlatform.ContainsKey(other.transform))
+			if (!_objectsOnPlatform.ContainsKey(other.gameObject.transform))
 			{
-                _objectsOnPlatform.Add(other.transform, other.transform.parent);
+				_objectsOnPlatform.Add(other.gameObject.transform, other.gameObject.transform.parent);
 
                 //Set parent to this platform's parent
-                other.transform.parent = transform;
+                other.gameObject.transform.SetParent(transform, true);
 			}
 		}
 	}
@@ -115,13 +118,19 @@ public class MovingPlatform : MonoBehaviour
 	private void OnTriggerExit(Collider other)
 	{
 		//Player layer
-        if(other.gameObject.layer == 3)
+		if (other.gameObject.layer == 3)
 		{
-            if(_objectsOnPlatform.ContainsKey(other.transform))
+			if (_objectsOnPlatform.ContainsKey(other.gameObject.transform))
 			{
+                
+                
                 //Set to original parent
-                other.transform.parent = _objectsOnPlatform[other.transform];
-                _objectsOnPlatform.Remove(other.transform);
+                other.gameObject.transform.SetParent(_objectsOnPlatform[other.gameObject.transform], true);
+
+                other.TryGetComponent<PlayerController>(out PlayerController player);
+                //player?._controller.attachedRigidbody.
+
+				_objectsOnPlatform.Remove(other.gameObject.transform);
 			}
 		}
 	}
