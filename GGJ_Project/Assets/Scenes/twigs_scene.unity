@@ -2064,6 +2064,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5110988336744339506, guid: 1b06c6bd94cafe24daa797d43531979f, type: 3}
+      propertyPath: _eldritchTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110988336744339506, guid: 1b06c6bd94cafe24daa797d43531979f, type: 3}
       propertyPath: _airborneSpeed
       value: 5
       objectReference: {fileID: 0}

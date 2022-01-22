@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class EldritchObject : MonoBehaviour
 {
@@ -11,6 +13,12 @@ public class EldritchObject : MonoBehaviour
 
     [SerializeField]
     private MeshRenderer _mesh;
+
+    /// <summary>
+    /// Will enable on/off matching the visible/invisible state.
+    /// </summary>
+    [SerializeField]
+    private List<Behaviour> _extraObjects;
 
     private void Awake()
     {
@@ -30,15 +38,25 @@ public class EldritchObject : MonoBehaviour
     public void SetVisible()
     {
         _mesh.material = _visibleMat;
+        SetExtraObjectsEnabled(true);
     }
 
     public void SetInvisible()
     {
         _mesh.material = _invisibleMat;
+        SetExtraObjectsEnabled(false);
     }
 
     public void OnDestroy()
     {
         EldritchVision.eldritchObjects.Remove(this);
+    }
+
+    private void SetExtraObjectsEnabled(bool isEnabled)
+    {
+        foreach (var extraObject in _extraObjects)
+        {
+            extraObject.enabled = isEnabled;
+        }
     }
 }

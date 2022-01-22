@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private float _gravity = 1f;
     [SerializeField, Min(0)]
     private float _airborneSpeed = 2.5f;
+    [SerializeField, Min(0)]
+    private float _eldritchTime;
 
     //Used only for Move() and isGrounded
     private CharacterController _controller;
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float _velocityY;
     //local variable for CharacterController isGrounded
     private bool _wasGrounded;
+    private bool _isEldritchVision;
     
     // Start is called before the first frame update
     void Start()
@@ -65,9 +68,9 @@ public class PlayerController : MonoBehaviour
         _velocity.y = _velocityY;
         _wasGrounded = _controller.isGrounded;
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !_isEldritchVision)
         {
-	        EldritchVision.Toggle();
+	        StartCoroutine(EldritchTime());
         }
     }
 
@@ -89,5 +92,16 @@ public class PlayerController : MonoBehaviour
     private void BecomeGrounded()
     {
 
+    }
+
+    private IEnumerator EldritchTime()
+    {
+	    EldritchVision.Toggle();
+	    _isEldritchVision = true;
+
+	    yield return new WaitForSeconds(_eldritchTime);
+
+	    _isEldritchVision = false;
+	    EldritchVision.Toggle();
     }
 }
