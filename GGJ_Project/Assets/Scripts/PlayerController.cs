@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeStress(int value)
 	{
-        _madness -= value;
+        _madness += value;
         //We can pass in negative values to reduce madness
         if(_madness <= 0)
 		{

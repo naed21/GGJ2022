@@ -149,6 +149,10 @@ public class EnemyController : MonoBehaviour
 
             Destroy(this.gameObject);
 		}
+        else
+		{
+            Destroy(this.gameObject);
+		}
 	}
 
 	private void OnDrawGizmos()
