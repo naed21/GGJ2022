@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Gun), typeof(DamageReceiver))]
 public class PlayerController : MonoBehaviour
@@ -133,7 +134,8 @@ public class PlayerController : MonoBehaviour
                 _isMaxMadness = true;
                 ui.LockGoggles(true);
                 ui.SetMaxMadness(true);
-			}
+                EldritchVision.Activate();
+            }
             else
                 StartCoroutine(EldritchTime());
         }
@@ -160,12 +162,27 @@ public class PlayerController : MonoBehaviour
         aimingDir.Normalize();
         _gun.bulletSpawnPoint.transform.position = playerOffsetPosition + aimingDir;
         _gun.bulletSpawnPoint.transform.rotation = quaternion.LookRotation(aimingDir, Vector3.up);
+
+        if(_isMaxMadness && !isTakingDamage)
+		{
+            StartCoroutine(TakeDamageOverTime());
+		}
     }
 
 	private void FixedUpdate()
 	{
         _controller.Move(_velocity * Time.deltaTime);
 	}
+
+
+    bool isTakingDamage = false;
+    public IEnumerator TakeDamageOverTime()
+	{
+        isTakingDamage = true;
+        yield return new WaitForSeconds(1);
+        TakeDamage(1);
+        isTakingDamage = false;
+    }
 
     public void AddCollectable(CollectableEnum collectable, int value)
 	{
@@ -232,6 +249,7 @@ public class PlayerController : MonoBehaviour
                 {
                     _isMaxMadness = false;
                     ui.SetMaxMadness(false);
+                    EldritchVision.Deactivate();
                 }
             }
 
@@ -269,6 +287,7 @@ public class PlayerController : MonoBehaviour
 			{
                 _isMaxMadness = false;
                 ui.SetMaxMadness(false);
+                EldritchVision.Deactivate();
             }
 		}
 
@@ -280,6 +299,7 @@ public class PlayerController : MonoBehaviour
             _isMaxMadness = true;
             ui.LockGoggles(true);
             ui.SetMaxMadness(true);
+            EldritchVision.Activate();
         }
 
         ui.SetMadness(_madness, _maxMadness);
@@ -299,7 +319,8 @@ public class PlayerController : MonoBehaviour
 			{
                 _isMaxMadness = false;
                 ui.SetMaxMadness(false);
-			}    
+                EldritchVision.Deactivate();
+            }    
 		}
 
         ui.SetMadness(_madness, _maxMadness);
@@ -309,7 +330,8 @@ public class PlayerController : MonoBehaviour
 	{
         //TODO, Show Death UI? Button to restart. Tells player they earned coins
         //coins += currentLevel; //Make sure this carries over between levels
-	}
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
 
     private void BecomeAirborne()
 	{

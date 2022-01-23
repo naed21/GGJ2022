@@ -20,7 +20,7 @@ public static class EldritchVision
         }
     }
     
-    private static void Activate()
+    public static void Activate()
     {
         foreach (var eo in eldritchObjects)
         {
@@ -28,7 +28,7 @@ public static class EldritchVision
         }
     }
 
-    private static void Deactivate()
+    public static void Deactivate()
     {
         foreach (var eo in eldritchObjects)
         {
