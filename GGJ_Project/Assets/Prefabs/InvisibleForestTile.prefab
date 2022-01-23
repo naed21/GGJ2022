@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4693147597214219023
+--- !u!1 &2568999353298484737
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5362301111621263797}
-  - component: {fileID: 9062759664895208976}
-  - component: {fileID: 6494635620823063258}
-  - component: {fileID: 5611486296021569241}
-  - component: {fileID: 7718521905218243085}
+  - component: {fileID: 2949079165919306939}
+  - component: {fileID: 2252609557378312990}
+  - component: {fileID: 4081975662200479700}
+  - component: {fileID: 3415842453266664407}
+  - component: {fileID: 691919729943957251}
   m_Layer: 0
-  m_Name: ForestTile_Base
+  m_Name: InvisibleForestTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5362301111621263797
+--- !u!4 &2949079165919306939
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4693147597214219023}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.201, y: 35.5, z: 0.4996}
+  m_GameObject: {fileID: 2568999353298484737}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 11, y: 1, z: 0}
   m_LocalScale: {x: 5.542585, y: 5.542585, z: 5.542585}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!33 &9062759664895208976
+--- !u!33 &2252609557378312990
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4693147597214219023}
+  m_GameObject: {fileID: 2568999353298484737}
   m_Mesh: {fileID: -3740943298706342986, guid: f485d79716503e34dbee03da935f1a97, type: 3}
---- !u!23 &6494635620823063258
+--- !u!23 &4081975662200479700
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4693147597214219023}
+  m_GameObject: {fileID: 2568999353298484737}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dff489c0b1b39b4680994dce6c2c144, type: 2}
+  - {fileID: 2100000, guid: 34a7bf528b4c2944abd297fd9f5a2e2d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,32 +83,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5611486296021569241
+--- !u!65 &3415842453266664407
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4693147597214219023}
+  m_GameObject: {fileID: 2568999353298484737}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.18049279, y: 0.18049279, z: 0.18049279}
   m_Center: {x: -0.090246394, y: -0.090246394, z: 0.090246394}
---- !u!114 &7718521905218243085
+--- !u!114 &691919729943957251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4693147597214219023}
+  m_GameObject: {fileID: 2568999353298484737}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4247de7e12161c44802d28097a17fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invisibleMat: {fileID: 2100000, guid: 9dff489c0b1b39b4680994dce6c2c144, type: 2}
+  _invisibleMat: {fileID: 2100000, guid: 34a7bf528b4c2944abd297fd9f5a2e2d, type: 2}
   _visibleMat: {fileID: 2100000, guid: a6585fc4df9e10347978fb162d33439f, type: 2}
-  _mesh: {fileID: 6494635620823063258}
+  _mesh: {fileID: 4081975662200479700}
   _extraObjects: []
