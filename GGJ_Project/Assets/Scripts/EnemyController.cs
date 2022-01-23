@@ -14,6 +14,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float _viewAngle;
     [Space]
+    [SerializeField]
+    private float _attackDelay;
     [SerializeField, Min(0)]
     private int _attackDamage;
     [SerializeField, Min(0)]
@@ -32,6 +34,10 @@ public class EnemyController : MonoBehaviour
     private int _health;
 
     private PlayerController _player;
+
+    private bool _canSeePlayer;
+    private bool _inAttackRange;
+    private bool _attacking;
 
     // Start is called before the first frame update
     void Start()
@@ -65,8 +71,7 @@ public class EnemyController : MonoBehaviour
         if (_player == null)
             return;
 
-        bool canSeePlayer = false;
-        bool inAttackRange = false;
+        _canSeePlayer = false;
 
         var distance = Vector3.Distance(transform.position, _player.transform.position);
         if (distance < _viewRange)
@@ -78,28 +83,49 @@ public class EnemyController : MonoBehaviour
                 //Is there anything in the way of the player
                 if(!Physics.Linecast(transform.position, _player.transform.position))
 				{
-                    canSeePlayer = true;
+                    _canSeePlayer = true;
 				}
 			}
 		}
 
         if (distance < _attackRange)
-            inAttackRange = true;
+            _inAttackRange = true;
+        else
+            _inAttackRange = false;
 
         if (_enemyType == EnemyTypeEnum.Landmine)
         {
             //Explode!
-            if(inAttackRange)
+            if(!_attacking && _inAttackRange)
 			{
-                _player.TakeDamage(_attackDamage + (canSeePlayer ? _extraDamage : 0));
-
-                _player.TakeStress(_stressDamage + (canSeePlayer ? _extraStress : 0));
-
-                if (canSeePlayer)
-                    Debug.Log("Full Damage!");
-
-                Death(false);
+                StartCoroutine(WaitForAttack(_attackDelay));
 			}
+        }
+    }
+
+    public IEnumerator WaitForAttack(float time)
+	{
+        _attacking = true;
+
+        yield return new WaitForSeconds(time);
+
+        _attacking = false;
+
+        Attack();
+	}
+
+    public void Attack()
+	{
+        if(_enemyType == EnemyTypeEnum.Landmine)
+		{
+            _player.TakeDamage(_attackDamage + (_canSeePlayer ? _extraDamage : 0));
+
+            _player.TakeStress(_stressDamage + (_canSeePlayer ? _extraStress : 0));
+
+            if (_canSeePlayer)
+                Debug.Log("Full Damage!");
+
+            Death(false);
         }
     }
 

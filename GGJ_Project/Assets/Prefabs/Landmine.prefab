@@ -113,6 +113,7 @@ MonoBehaviour:
   _viewRange: 2
   _attackRange: 3
   _viewAngle: 360
+  _attackDelay: 0.5
   _attackDamage: 10
   _extraDamage: 5
   _stressDamage: 20
