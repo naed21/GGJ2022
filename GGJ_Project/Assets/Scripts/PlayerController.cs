@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     //local variable for CharacterController isGrounded
     private bool _wasGrounded;
     private bool _isEldritchVision;
+    private bool _isMaxMadness = false;
 
     private UIController _ui;
 
@@ -45,10 +46,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private CollectableEnum _useItem = CollectableEnum.None;
     [Space]
+    //How much madness is reduced when using booze
     [SerializeField, Min(0)]
     private int _boozeValue = 20;
+    //How much health is restored when using health item
     [SerializeField, Min(0)]
     private int _healthValue = 10;
+    //How much madness increases when using goggles
+    [SerializeField, Min(0)]
+    private int _goggleValue = 10;
     
     // Start is called before the first frame update
     void Start()
@@ -102,9 +108,24 @@ public class PlayerController : MonoBehaviour
         _velocity.y = _velocityY;
         _wasGrounded = _controller.isGrounded;
 
-        if (Input.GetKeyDown(KeyCode.Q) && !_isEldritchVision)
+        if (Input.GetKeyDown(KeyCode.Q) && !_isEldritchVision && !_isMaxMadness)
         {
-	        StartCoroutine(EldritchTime());
+            _madness += _goggleValue;
+            if(_madness >= _maxMadness)
+			{
+                _isEldritchVision = true;
+                _isMaxMadness = true;
+                _ui.LockGoggles(true);
+			}
+            else
+                StartCoroutine(EldritchTime());
+        }
+
+        if(Input.GetKeyDown(KeyCode.F) && _useItem != CollectableEnum.None)
+		{
+            UseCollectable(_useItem);
+            _useItem = CollectableEnum.None;
+            _ui.SetUseItem(CollectableEnum.None);
         }
     }
 
@@ -131,30 +152,67 @@ public class PlayerController : MonoBehaviour
 		}
         else if(collectable == CollectableEnum.Booze)
 		{
-            //lower madness
-            _madness += value;
-            if (_madness > _maxMadness)
-                _madness = _maxMadness;
-            else if (_madness < 0)
-                _madness = 0;
+            if (_useItem == CollectableEnum.None)
+            {
+                _useItem = CollectableEnum.Booze;
+                _ui.SetUseItem(CollectableEnum.Booze);
+            }
+            else
+			{
+                //TODO: Drop item instead of using
+                UseCollectable(_useItem);
 
-            _ui.SetMadness(_madness, _maxMadness);
+                _useItem = CollectableEnum.Booze;
+                _ui.SetUseItem(CollectableEnum.Booze);
+			}
+		}
+        else if(collectable == CollectableEnum.Health)
+		{
+            if(_useItem == CollectableEnum.None)
+			{
+                _useItem = CollectableEnum.Health;
+                _ui.SetUseItem(CollectableEnum.Health);
+			}
+            else
+			{
+                //TODO: Drop item instead of using
+                UseCollectable(_useItem);
+
+                _useItem = CollectableEnum.Health;
+                _ui.SetUseItem(CollectableEnum.Health);
+			}
 		}
 	}
 
     public void UseCollectable(CollectableEnum collectable)
-	{
+	{        
         if (collectable == CollectableEnum.Booze)
         {
             //lower madness
-            _madness += _boozeValue;
-            if (_madness > _maxMadness)
-                _madness = _maxMadness;
-            else if (_madness < 0)
+            _madness -= _boozeValue;
+
+            if (_madness <= 0)
+            {
                 _madness = 0;
+
+                if (_isMaxMadness)
+                {
+                    _isMaxMadness = false;
+                    _ui.SetMaxMadness(false);
+                }
+            }
 
             _ui.SetMadness(_madness, _maxMadness);
         }
+        else if(collectable == CollectableEnum.Health)
+		{
+            _health += _healthValue;
+
+            if (_health > _maxHealth)
+                _health = _maxHealth;
+
+            _ui.SetHealth(_health, _maxHealth);
+		}
     }
 
     public void TakeDamage(int value)
@@ -165,6 +223,26 @@ public class PlayerController : MonoBehaviour
         if (_health <= 0)
             Death();
 	}
+
+    public void EnemyDeath(EnemyTypeEnum enemyType, int value)
+	{
+        //Value = amount of madness reduced
+        //TODO, should the enemy Type be replaced with enemy controller?
+
+        _madness -= value;
+        
+        if (_madness <= 0)
+		{
+            _madness = 0;
+            if(_isMaxMadness)
+			{
+                _isMaxMadness = false;
+                _ui.SetMaxMadness(false);
+			}    
+		}
+
+        _ui.SetMadness(_madness, _maxMadness);
+    }
 
     public void Death()
 	{

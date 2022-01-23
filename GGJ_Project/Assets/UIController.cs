@@ -100,13 +100,7 @@ public class UIController : MonoBehaviour
 	{
         if(amount >= max)
 		{
-            amount = max;
-            _maxMadness = true;
-            _madnessBackRef.enabled = true;
-		}
-        else if(_maxMadness)
-		{
-            _maxMadness = false;
+            amount = max; 
 		}
         
         float percent = (float)amount / (float)max;
@@ -117,6 +111,12 @@ public class UIController : MonoBehaviour
 
         _madnessTextRef.text = amount.ToString() + "/" + max.ToString();
 	}
+
+    public void SetMaxMadness(bool value)
+	{
+        _maxMadness = value;
+        _madnessBackRef.enabled = value;
+    }
 
     public void SetGunCoolDown(int amount, int max)
     {
@@ -162,5 +162,22 @@ public class UIController : MonoBehaviour
     public void SetCoinValue(int amount)
 	{
         _coinTextRef.text = amount.ToString();
+	}
+
+    public void SetUseItem(CollectableEnum collectable)
+	{
+        //TODO, show that item's image in the itemRef
+	}
+
+    public void LockGoggles(bool setLock)
+	{
+        if(setLock)
+		{
+
+		}
+        else
+		{
+
+		}
 	}
 }
