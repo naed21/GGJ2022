@@ -80,9 +80,15 @@ public class PlayerController : MonoBehaviour
             _velocity = _direction * _speed;
 
             if (_direction.x > 0)
-                _animController.SetTrigger("TrStrafeRight");
+            {
+                //_animController.SetTrigger("TrStrafeRight");
+                _animController.Play("strafe_right");
+            }
             else if (_direction.x < 0)
-                _animController.SetTrigger("TrStrafeLeft");
+            {
+                //_animController.SetTrigger("TrStrafeLeft");
+                _animController.Play("strafe_left");
+            }
             
 
             if (!_controller.isGrounded && _wasGrounded)
