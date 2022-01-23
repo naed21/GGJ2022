@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && !_isEldritchVision && !_isMaxMadness)
         {
             _madness += _goggleValue;
+            ui.SetMadness(_madness, _maxMadness);
             if(_madness >= _maxMadness)
 			{
                 _isEldritchVision = true;
@@ -153,10 +154,11 @@ public class PlayerController : MonoBehaviour
         mouseWorldPos.z = GameManager.mainCameraController.transform.position.z * -1;
         mouseWorldPos = GameManager.mainCameraController.myCamera.ScreenToWorldPoint(mouseWorldPos);
 
-        mouseWorldPos.z = _transform.position.z;
-        var aimingDir = mouseWorldPos - _transform.position;
+        var playerOffsetPosition = _transform.position + Vector3.up * 0.9f;
+        mouseWorldPos.z = playerOffsetPosition.z;
+        var aimingDir = mouseWorldPos - playerOffsetPosition;
         aimingDir.Normalize();
-        _gun.bulletSpawnPoint.transform.position = transform.position + aimingDir + Vector3.up * 0.9f;
+        _gun.bulletSpawnPoint.transform.position = playerOffsetPosition + aimingDir;
         _gun.bulletSpawnPoint.transform.rotation = quaternion.LookRotation(aimingDir, Vector3.up);
     }
 
