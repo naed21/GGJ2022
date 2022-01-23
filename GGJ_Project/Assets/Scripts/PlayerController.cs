@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Gun), typeof(DamageReceiver))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField, Min(0)]
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private bool _wasGrounded;
     private bool _isEldritchVision;
     private bool _isMaxMadness = false;
+    private Gun _gun;
+    private DamageReceiver _damageReceiver;
 
     private Animator _animController;
 
@@ -63,6 +66,9 @@ public class PlayerController : MonoBehaviour
 		DontDestroyOnLoad(this);
         _controller = GetComponent<CharacterController>();
         _animController = GetComponent<Animator>();
+        _gun = GetComponent<Gun>();
+        _damageReceiver = GetComponent<DamageReceiver>();
+        _damageReceiver.onDamage += TakeDamage;
 	}
 
 	// Update is called once per frame
@@ -122,6 +128,11 @@ public class PlayerController : MonoBehaviour
             UseCollectable(_useItem);
             _useItem = CollectableEnum.None;
             ui.SetUseItem(CollectableEnum.None);
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+	        _gun.Fire();
         }
     }
 
