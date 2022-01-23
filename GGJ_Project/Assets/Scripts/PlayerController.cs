@@ -73,7 +73,17 @@ public class PlayerController : MonoBehaviour
         _damageReceiver = GetComponent<DamageReceiver>();
         _damageReceiver.onDamage += TakeDamage;
         _transform = transform;
-	}
+    }
+
+	private void Start()
+	{
+        if (ui != null)
+        {
+            ui.SetHealth(_health, _maxHealth);
+            ui.SetMadness(_madness, _maxMadness);
+            ui.SetUseItem(_useItem);
+        }
+    }
 
 	// Update is called once per frame
 	void Update()
