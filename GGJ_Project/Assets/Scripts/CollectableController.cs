@@ -15,6 +15,8 @@ public class CollectableController : MonoBehaviour
     [Space]
     [SerializeField, Range(1, 100)]
     private int _value;
+    [SerializeField]
+    private CollectableEnum _collectableType;
 
     private float _originY;
     private TextMeshPro[] _text;
@@ -50,7 +52,7 @@ public class CollectableController : MonoBehaviour
 		if(other.CompareTag("Player"))
 		{
             other.TryGetComponent(out PlayerController player);
-            player?.FoundCollectable(_value);
+            player?.AddCollectable(_collectableType, _value);
 
             Destroy(gameObject);
 		}
