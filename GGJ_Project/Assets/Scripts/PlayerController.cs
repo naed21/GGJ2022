@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private bool _isEldritchVision;
     private bool _isMaxMadness = false;
 
+    private Animator _animController;
+
     public UIController ui;
 
     [Space]
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
 	{
 		DontDestroyOnLoad(this);
         _controller = GetComponent<CharacterController>();
+        _animController = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
@@ -69,6 +72,12 @@ public class PlayerController : MonoBehaviour
 		{
             Vector3 _direction = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
             _velocity = _direction * _speed;
+
+            if (_direction.x > 0)
+                _animController.SetTrigger("TrStrafeRight");
+            else if (_direction.x < 0)
+                _animController.SetTrigger("TrStrafeLeft");
+            
 
             if (!_controller.isGrounded && _wasGrounded)
                 BecomeAirborne();

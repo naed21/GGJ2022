@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField]
     private Sprite _boozeSprite;
+    [SerializeField]
     private Sprite _healthSprite;
     
     private List<Image> _allImages;

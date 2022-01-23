@@ -1818,7 +1818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17972c056151a974e8854529b79c548d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boozeSprite: {fileID: 0}
+  _boozeSprite: {fileID: 21300000, guid: 4c79ffbd52d09014da1698a6ca4bd2ea, type: 3}
+  _healthSprite: {fileID: 21300000, guid: ad25ff41fb263184aa713383021ba5f8, type: 3}
 --- !u!1 &5954825129706758261
 GameObject:
   m_ObjectHideFlags: 0
