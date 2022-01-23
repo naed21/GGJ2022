@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    [SerializeField]
+    private Sprite _boozeSprite;
+    private Sprite _healthSprite;
+    
     private List<Image> _allImages;
     private List<Text> _allText;
 
@@ -15,6 +19,8 @@ public class UIController : MonoBehaviour
     private Image _gunCoolDownRef;
     private Image _goggleCoolDownRef;
     private Image _itemCoolDownRef;
+    private Image _goggleLockRef;
+    private Image _itemRef;
 
     private Text _healthTextRef;
     private Text _madnessTextRef;
@@ -36,7 +42,8 @@ public class UIController : MonoBehaviour
     void Start()
     {
 	    DontDestroyOnLoad(this);
-        SetHealth(1, 1000);
+        //SetHealth(1, 1000);
+        LockGoggles(false);
     }
 
 	private void Awake()
@@ -50,6 +57,8 @@ public class UIController : MonoBehaviour
         _gunCoolDownRef = _allImages.First(x => x.name == "GunCoolDown");
         _goggleCoolDownRef = _allImages.First(x => x.name == "GoggleCoolDown");
         _itemCoolDownRef = _allImages.First(x => x.name == "ItemCoolDown");
+        _goggleLockRef = _allImages.First(x => x.name == "Goggle_Lock");
+        _itemRef = _allImages.First(x => x.name == "Item");
 
         _healthTextRef = _allText.First(x => x.name == "HealthValue");
         _madnessTextRef = _allText.First(x => x.name == "MadnessValue");
@@ -167,18 +176,29 @@ public class UIController : MonoBehaviour
 
     public void SetUseItem(CollectableEnum collectable)
 	{
-        //TODO, show that item's image in the itemRef
+        if (collectable == CollectableEnum.None)
+            _itemRef.enabled = false;
+        else if(collectable == CollectableEnum.Booze)
+		{
+            _itemRef.enabled = true;
+            _itemRef.sprite = _boozeSprite;
+		}
+        else if(collectable == CollectableEnum.Health)
+		{
+            _itemRef.enabled = true;
+            _itemRef.sprite = _healthSprite;
+		}
 	}
 
     public void LockGoggles(bool setLock)
 	{
         if(setLock)
 		{
-
+            _goggleLockRef.enabled = true;
 		}
         else
 		{
-
+            _goggleLockRef.enabled = false;
 		}
 	}
 }
