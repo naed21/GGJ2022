@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]
-    private Transform _player;
+    public Transform player;
     [SerializeField]
     private Vector3 _cameraOffset;
     [SerializeField]
@@ -28,24 +27,24 @@ public class CameraController : MonoBehaviour
         // while smoothing the value
         _cameraPos.x = Mathf.Lerp(
             transform.position.x,
-            _player.position.x + _cameraOffset.x,
+            player.position.x + _cameraOffset.x,
             Time.deltaTime * _cameraSmoothing.x);
 
         _cameraPos.y = Mathf.Lerp(
             transform.position.y,
-            _player.position.y + _cameraOffset.y,
+            player.position.y + _cameraOffset.y,
             Time.deltaTime * _cameraSmoothing.y);
 
         //Clamp camera position inside the deadzone
-        if (_cameraPos.x - _player.position.x > _cameraDeadZone.x)
-            _cameraPos.x = _player.position.x + _cameraDeadZone.x;
-        else if (_cameraPos.x - _player.position.x < -_cameraDeadZone.x)
-            _cameraPos.x = _player.position.x - _cameraDeadZone.x;
+        if (_cameraPos.x - player.position.x > _cameraDeadZone.x)
+            _cameraPos.x = player.position.x + _cameraDeadZone.x;
+        else if (_cameraPos.x - player.position.x < -_cameraDeadZone.x)
+            _cameraPos.x = player.position.x - _cameraDeadZone.x;
 
-        if (_cameraPos.y - _player.position.y > _cameraDeadZone.y)
-            _cameraPos.y = _player.position.y + _cameraDeadZone.y;
-        else if (_cameraPos.y - _player.position.y < -_cameraDeadZone.y)
-            _cameraPos.y = _player.position.y - _cameraDeadZone.y;
+        if (_cameraPos.y - player.position.y > _cameraDeadZone.y)
+            _cameraPos.y = player.position.y + _cameraDeadZone.y;
+        else if (_cameraPos.y - player.position.y < -_cameraDeadZone.y)
+            _cameraPos.y = player.position.y - _cameraDeadZone.y;
 
         _cameraPos.z = _cameraOffset.z;
     }

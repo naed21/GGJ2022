@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class NextLevelTrigger : MonoBehaviour
 {
 	public float transitionDuration = 2;
+	// TODO: would be nice to confirm that the string is a scene in the build settings
+	// Custom Inspector GUI?
+	public string nextScene;
 	
 	private void OnTriggerEnter(Collider other)
 	{
@@ -17,6 +20,7 @@ public class NextLevelTrigger : MonoBehaviour
 	{
 		yield return new WaitForSeconds(transitionDuration);
 
-		SceneManager.LoadSceneAsync("town");
+		GameManager.DisablePlayer();
+		SceneManager.LoadSceneAsync(nextScene);
 	}
 }

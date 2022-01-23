@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 982094197790747841}
   - component: {fileID: 8014947069220761934}
   - component: {fileID: 9194553429569542839}
+  - component: {fileID: 619999983554931463}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -212,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfb2e052983afb428137070f1d4ef76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  player: {fileID: 0}
   _cameraOffset: {x: 0, y: 0, z: -10}
   _cameraSmoothing: {x: 0, y: 0}
   _cameraDeadZone: {x: 0, y: 0}
@@ -262,3 +263,15 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &619999983554931463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698628474231004559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48c0268d9832864c86c9dec0022c2ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
