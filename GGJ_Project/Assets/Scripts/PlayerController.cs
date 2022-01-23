@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     //How much madness increases when using goggles
     [SerializeField, Min(0)]
     private int _goggleValue = 10;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,11 +68,15 @@ public class PlayerController : MonoBehaviour
                 break;
 			}
 
-        _ui = target.GetComponent<UIController>();
+        if (target != null)
+        {
+	        _ui = target.GetComponent<UIController>();
+        }
     }
 
 	private void Awake()
 	{
+		DontDestroyOnLoad(this);
         _controller = GetComponent<CharacterController>();
 	}
 
@@ -152,7 +156,7 @@ public class PlayerController : MonoBehaviour
 		}
         else if(collectable == CollectableEnum.Booze)
 		{
-            if (_useItem == CollectableEnum.None)
+			if (_useItem == CollectableEnum.None)
             {
                 _useItem = CollectableEnum.Booze;
                 _ui.SetUseItem(CollectableEnum.Booze);
@@ -269,5 +273,43 @@ public class PlayerController : MonoBehaviour
 
 	    _isEldritchVision = false;
 	    EldritchVision.Toggle();
+    }
+
+    /// <summary>
+    /// Here be dragons!
+    /// Because Unity is fucking dumb, why can't I just set the position of this transform and clear the CharacterController?
+    /// Or just set the velocity value on the CharacterController, there is no reset function!
+    /// So instead I have to do this dumb shit, save variables, destroy immediate the old controller, and make a new one with the saved
+    /// variables... so dumb!
+    /// </summary>
+    /// <param name="position"></param>
+    public void Respawn(Vector3 position)
+    {
+	    _velocity = Vector3.zero;
+	    _velocityY = 0;
+	    transform.position = position;
+	    
+	    var center = _controller.center;
+	    var height = _controller.height;
+	    var radius = _controller.radius;
+	    var slopeLimit = _controller.slopeLimit;
+	    var stepOffset = _controller.stepOffset;
+	    var skinWidth = _controller.skinWidth;
+	    var minMoveDistance = _controller.minMoveDistance;
+
+	    DestroyImmediate(_controller);
+	    _controller = null;
+	    
+	    var fucker = gameObject.AddComponent<CharacterController>();
+
+	    fucker.center = center;
+	    fucker.height = height;
+	    fucker.radius = radius;
+	    fucker.slopeLimit = slopeLimit;
+	    fucker.stepOffset = stepOffset;
+	    fucker.skinWidth = skinWidth;
+	    fucker.minMoveDistance = minMoveDistance;
+	    
+	    _controller = fucker;
     }
 }
