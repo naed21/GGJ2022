@@ -18294,6 +18294,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3467349626048404098, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
+      propertyPath: _waypoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467349626048404098, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
+      propertyPath: _waypoints.Array.data[0].x
+      value: -25.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467349626048404098, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
+      propertyPath: _waypoints.Array.data[0].y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467349626048404098, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
+      propertyPath: _waypoints.Array.data[1].x
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467349626048404098, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
+      propertyPath: _waypoints.Array.data[1].y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7161484958928728921, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
       propertyPath: m_Name
       value: MovingPlatform (1)
@@ -29355,7 +29375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2949079165919306939, guid: 0d4b3bef2fc4c9a49aad2a64f1d65074, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2949079165919306939, guid: 0d4b3bef2fc4c9a49aad2a64f1d65074, type: 3}
       propertyPath: m_LocalPosition.x
@@ -35542,7 +35562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3467349626048404098, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
       propertyPath: _waypoints.Array.data[0].y
-      value: -14
+      value: -10.5
       objectReference: {fileID: 0}
     - target: {fileID: 3467349626048404098, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
       propertyPath: _waypoints.Array.data[1].x
@@ -35558,7 +35578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8485576410403852527, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8485576410403852527, guid: 7564508e58f1e2a4fbf1f6d3c8456054, type: 3}
       propertyPath: m_LocalScale.x
@@ -36241,11 +36261,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129510358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -9.174, z: -0.867}
+  m_LocalPosition: {x: -2, y: -9.174, z: -0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2129510360
 MonoBehaviour:
