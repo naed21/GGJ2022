@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private bool _isEldritchVision;
     private bool _isMaxMadness = false;
 
-    private UIController _ui;
+    public UIController ui;
 
     [Space]
     [SerializeField]
@@ -56,25 +56,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Min(0)]
     private int _goggleValue = 10;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Canvas target = null;
-        Canvas[] canvases = FindObjectsOfType<Canvas>();
-        foreach(var can in canvases)
-            if(can.CompareTag("MainUI"))
-			{
-                target = can;
-                break;
-			}
-
-        if (target != null)
-        {
-	        _ui = target.GetComponent<UIController>();
-        }
-    }
-
-	private void Awake()
+    private void Awake()
 	{
 		DontDestroyOnLoad(this);
         _controller = GetComponent<CharacterController>();
@@ -119,7 +101,7 @@ public class PlayerController : MonoBehaviour
 			{
                 _isEldritchVision = true;
                 _isMaxMadness = true;
-                _ui.LockGoggles(true);
+                ui.LockGoggles(true);
 			}
             else
                 StartCoroutine(EldritchTime());
@@ -129,7 +111,7 @@ public class PlayerController : MonoBehaviour
 		{
             UseCollectable(_useItem);
             _useItem = CollectableEnum.None;
-            _ui.SetUseItem(CollectableEnum.None);
+            ui.SetUseItem(CollectableEnum.None);
         }
     }
 
@@ -141,25 +123,25 @@ public class PlayerController : MonoBehaviour
     public void AddCollectable(CollectableEnum collectable, int value)
 	{
         //Throw error so we can fix it?
-        if (_ui == null)
+        if (ui == null)
             return;
         
         if(collectable == CollectableEnum.Key)
 		{
             _keys += value;
-            _ui.SetKeyValue(_keys);
+            ui.SetKeyValue(_keys);
 		}
         else if(collectable == CollectableEnum.Coin)
 		{
             _coins += value;
-            _ui.SetCoinValue(_coins);
+            ui.SetCoinValue(_coins);
 		}
         else if(collectable == CollectableEnum.Booze)
 		{
 			if (_useItem == CollectableEnum.None)
             {
                 _useItem = CollectableEnum.Booze;
-                _ui.SetUseItem(CollectableEnum.Booze);
+                ui.SetUseItem(CollectableEnum.Booze);
             }
             else
 			{
@@ -167,7 +149,7 @@ public class PlayerController : MonoBehaviour
                 UseCollectable(_useItem);
 
                 _useItem = CollectableEnum.Booze;
-                _ui.SetUseItem(CollectableEnum.Booze);
+                ui.SetUseItem(CollectableEnum.Booze);
 			}
 		}
         else if(collectable == CollectableEnum.Health)
@@ -175,7 +157,7 @@ public class PlayerController : MonoBehaviour
             if(_useItem == CollectableEnum.None)
 			{
                 _useItem = CollectableEnum.Health;
-                _ui.SetUseItem(CollectableEnum.Health);
+                ui.SetUseItem(CollectableEnum.Health);
 			}
             else
 			{
@@ -183,7 +165,7 @@ public class PlayerController : MonoBehaviour
                 UseCollectable(_useItem);
 
                 _useItem = CollectableEnum.Health;
-                _ui.SetUseItem(CollectableEnum.Health);
+                ui.SetUseItem(CollectableEnum.Health);
 			}
 		}
 	}
@@ -202,11 +184,11 @@ public class PlayerController : MonoBehaviour
                 if (_isMaxMadness)
                 {
                     _isMaxMadness = false;
-                    _ui.SetMaxMadness(false);
+                    ui.SetMaxMadness(false);
                 }
             }
 
-            _ui.SetMadness(_madness, _maxMadness);
+            ui.SetMadness(_madness, _maxMadness);
         }
         else if(collectable == CollectableEnum.Health)
 		{
@@ -215,14 +197,14 @@ public class PlayerController : MonoBehaviour
             if (_health > _maxHealth)
                 _health = _maxHealth;
 
-            _ui.SetHealth(_health, _maxHealth);
+            ui.SetHealth(_health, _maxHealth);
 		}
     }
 
     public void TakeDamage(int value)
 	{
         _health -= value;
-        _ui.SetHealth(_health, _maxHealth);
+        ui.SetHealth(_health, _maxHealth);
 
         if (_health <= 0)
             Death();
@@ -241,11 +223,11 @@ public class PlayerController : MonoBehaviour
             if(_isMaxMadness)
 			{
                 _isMaxMadness = false;
-                _ui.SetMaxMadness(false);
+                ui.SetMaxMadness(false);
 			}    
 		}
 
-        _ui.SetMadness(_madness, _maxMadness);
+        ui.SetMadness(_madness, _maxMadness);
     }
 
     public void Death()

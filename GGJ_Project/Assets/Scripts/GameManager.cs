@@ -5,6 +5,7 @@ public static class GameManager
 {
     public static CameraController mainCameraController;
     public static PlayerController user;
+    public static UIController uiController;
 
     private static bool _hasSpawnedPlayer;
     private static GameSettings _settings;
@@ -37,8 +38,14 @@ public static class GameManager
             var cameraGO = GameObject.Instantiate(_settings.cameraPrefab, position, quaternion.identity);
             mainCameraController = cameraGO.GetComponent<CameraController>();
             mainCameraController.player = playerGO.transform;
-            
+
             mainCameraController.enabled = true;
+
+            var uiGO = GameObject.Instantiate(_settings.uiPrefab, Vector3.zero, Quaternion.identity);
+            uiController = uiGO.GetComponent<UIController>();
+
+            user.ui = uiController;
+
             _hasSpawnedPlayer = true;
         }
         else
