@@ -9,6 +9,7 @@ public class NextLevelTrigger : MonoBehaviour
 	// TODO: would be nice to confirm that the string is a scene in the build settings
 	// Custom Inspector GUI?
 	public string nextScene;
+	public bool shouldDestroyPlayer;
 	
 	private void OnTriggerEnter(Collider other)
 	{
@@ -22,5 +23,11 @@ public class NextLevelTrigger : MonoBehaviour
 
 		GameManager.DisablePlayer();
 		SceneManager.LoadSceneAsync(nextScene);
+		if (shouldDestroyPlayer)
+		{
+			Destroy(GameManager.user.gameObject);
+			Destroy(GameManager.uiController.gameObject);
+			Destroy(GameManager.mainCameraController.gameObject);
+		}
 	}
 }
