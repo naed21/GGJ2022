@@ -11460,8 +11460,12 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5110988336744339506, guid: 1b06c6bd94cafe24daa797d43531979f, type: 3}
+      propertyPath: _gravity
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110988336744339506, guid: 1b06c6bd94cafe24daa797d43531979f, type: 3}
       propertyPath: _jumpHeight
-      value: 12
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5110988336744339506, guid: 1b06c6bd94cafe24daa797d43531979f, type: 3}
       propertyPath: _eldritchTime
