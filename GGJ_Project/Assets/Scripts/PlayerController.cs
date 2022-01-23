@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(Gun), typeof(DamageReceiver))]
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Min(0)]
     private int _goggleValue = 10;
 
+    private Transform _transform;
+
     private void Awake()
 	{
 		DontDestroyOnLoad(this);
@@ -69,6 +72,7 @@ public class PlayerController : MonoBehaviour
         _gun = GetComponent<Gun>();
         _damageReceiver = GetComponent<DamageReceiver>();
         _damageReceiver.onDamage += TakeDamage;
+        _transform = transform;
 	}
 
 	// Update is called once per frame
@@ -134,6 +138,16 @@ public class PlayerController : MonoBehaviour
         {
 	        _gun.Fire();
         }
+
+        var mouseWorldPos = Input.mousePosition;
+        mouseWorldPos.z = GameManager.mainCameraController.transform.position.z * -1;
+        mouseWorldPos = GameManager.mainCameraController.myCamera.ScreenToWorldPoint(mouseWorldPos);
+
+        mouseWorldPos.z = _transform.position.z;
+        var aimingDir = mouseWorldPos - _transform.position;
+        aimingDir.Normalize();
+        _gun.bulletSpawnPoint.transform.position = transform.position + aimingDir + Vector3.up * 0.9f;
+        _gun.bulletSpawnPoint.transform.rotation = quaternion.LookRotation(aimingDir, Vector3.up);
     }
 
 	private void FixedUpdate()
@@ -318,7 +332,7 @@ public class PlayerController : MonoBehaviour
     {
 	    _velocity = Vector3.zero;
 	    _velocityY = 0;
-	    transform.position = position;
+	    _transform.position = position;
 	    
 	    var center = _controller.center;
 	    var height = _controller.height;

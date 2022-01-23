@@ -73,20 +73,7 @@ public class EnemyController : MonoBehaviour
 
         _canSeePlayer = false;
 
-        var distance = Vector3.Distance(transform.position, _player.transform.position);
-        if (distance < _viewRange)
-		{
-            Vector3 direction = (_player.transform.position - transform.position).normalized;
-            float angle = Vector3.Angle(transform.forward, direction);
-            if(angle < _viewAngle / 2)
-			{
-                //Is there anything in the way of the player
-                if(!Physics.Linecast(transform.position, _player.transform.position))
-				{
-                    _canSeePlayer = true;
-				}
-			}
-		}
+        var distance = CheckCanSeeAndGetDistance();
 
         if (distance < _attackRange)
             _inAttackRange = true;
@@ -101,6 +88,26 @@ public class EnemyController : MonoBehaviour
                 StartCoroutine(WaitForAttack(_attackDelay));
 			}
         }
+    }
+
+    public float CheckCanSeeAndGetDistance()
+	{
+        var distance = Vector3.Distance(transform.position, _player.transform.position);
+        if (distance < _viewRange)
+        {
+            Vector3 direction = (_player.transform.position - transform.position).normalized;
+            float angle = Vector3.Angle(transform.forward, direction);
+            if (angle < _viewAngle / 2)
+            {
+                //Is there anything in the way of the player
+                if (!Physics.Linecast(transform.position, _player.transform.position))
+                {
+                    _canSeePlayer = true;
+                }
+            }
+        }
+
+        return distance;
     }
 
     public IEnumerator WaitForAttack(float time)
@@ -118,9 +125,19 @@ public class EnemyController : MonoBehaviour
 	{
         if(_enemyType == EnemyTypeEnum.Landmine)
 		{
-            _player.TakeDamage(_attackDamage + (_canSeePlayer ? _extraDamage : 0));
+            var distance = CheckCanSeeAndGetDistance();
 
-            _player.TakeStress(_stressDamage + (_canSeePlayer ? _extraStress : 0));
+            if (distance < _attackRange)
+                _inAttackRange = true;
+            else
+                _inAttackRange = false;
+
+            if (_inAttackRange)
+            {
+                _player.TakeDamage(_attackDamage + (_canSeePlayer ? _extraDamage : 0));
+
+                _player.TakeStress(_stressDamage + (_canSeePlayer ? _extraStress : 0));
+            }
 
             if (_canSeePlayer)
                 Debug.Log("Full Damage!");

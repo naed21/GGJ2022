@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
     public Transform player;
@@ -13,6 +15,13 @@ public class CameraController : MonoBehaviour
     private Vector2 _cameraDeadZone;
 
     private Vector3 _cameraPos;
+    
+    public Camera myCamera;
+
+    private void Awake()
+    {
+        myCamera = GetComponent<Camera>();
+    }
 
     private void FixedUpdate()
 	{
