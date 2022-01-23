@@ -14,20 +14,8 @@ public class CameraController : MonoBehaviour
     private Vector2 _cameraDeadZone;
 
     private Vector3 _cameraPos;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-	private void FixedUpdate()
+    private void Update()
 	{
         CalculateCameraPosition();
         transform.position = _cameraPos;
