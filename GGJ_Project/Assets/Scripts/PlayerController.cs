@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
                 _isEldritchVision = true;
                 _isMaxMadness = true;
                 ui.LockGoggles(true);
+                ui.SetMaxMadness(true);
 			}
             else
                 StartCoroutine(EldritchTime());
@@ -201,6 +202,7 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
+    //Normal damage and extra damage if player decides it should take extra
     public void TakeDamage(int value)
 	{
         _health -= value;
@@ -208,6 +210,33 @@ public class PlayerController : MonoBehaviour
 
         if (_health <= 0)
             Death();
+	}
+
+    public void TakeStress(int value)
+	{
+        _madness -= value;
+        //We can pass in negative values to reduce madness
+        if(_madness <= 0)
+		{
+            _madness = 0;
+            if(_isMaxMadness)
+			{
+                _isMaxMadness = false;
+                ui.SetMaxMadness(false);
+            }
+		}
+
+        if(_madness > _maxMadness)
+		{
+            _madness = _maxMadness;
+
+            _isEldritchVision = true;
+            _isMaxMadness = true;
+            ui.LockGoggles(true);
+            ui.SetMaxMadness(true);
+        }
+
+        ui.SetMadness(_madness, _maxMadness);
 	}
 
     public void EnemyDeath(EnemyTypeEnum enemyType, int value)
