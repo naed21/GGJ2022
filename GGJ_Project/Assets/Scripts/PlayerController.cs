@@ -350,8 +350,11 @@ public class PlayerController : MonoBehaviour
 
 	    yield return new WaitForSeconds(_eldritchTime);
 
-	    _isEldritchVision = false;
-	    EldritchVision.Toggle();
+        if (!_isMaxMadness)
+        {
+            _isEldritchVision = false;
+            EldritchVision.Toggle();
+        }
     }
 
     /// <summary>
