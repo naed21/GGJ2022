@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
 
     private Vector3 _cameraPos;
 
-    private void Update()
+    private void FixedUpdate()
 	{
         CalculateCameraPosition();
         transform.position = _cameraPos;

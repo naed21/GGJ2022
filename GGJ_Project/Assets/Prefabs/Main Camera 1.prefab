@@ -104,8 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   _cameraOffset: {x: 0, y: 0, z: -10}
-  _cameraSmoothing: {x: 0, y: 0}
-  _cameraDeadZone: {x: 0, y: 0}
+  _cameraSmoothing: {x: 5, y: 5}
+  _cameraDeadZone: {x: 5, y: 5}
 --- !u!114 &1201028004328293800
 MonoBehaviour:
   m_ObjectHideFlags: 0
